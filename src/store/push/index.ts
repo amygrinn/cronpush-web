@@ -66,7 +66,6 @@ const pushModule: Module<PushModule, any> = {
 
       try {
         const subscription = await getPushSubscription(true)
-
         if (subscription) {
           try {
             let result = await http.get('/push', {

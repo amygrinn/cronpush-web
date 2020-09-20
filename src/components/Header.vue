@@ -3,7 +3,8 @@
     <div class="overlay position-fixed" />
 
     <p class="instructions position-fixed" v-if="!on">
-      Click to enter or <router-link to="/about">learn more</router-link>
+      Click to enter or
+      <router-link to="/about">learn more</router-link>
     </p>
 
     <div class="d-flex flex-column px-2" style="max-width: 100%">
@@ -22,11 +23,15 @@
       <div class="toolbar">
         <div class="d-flex justify-content-end">
           <i
+            v-if="!user"
             class="material-icons toolbar-item"
             @click="$bvModal.show('login-modal')"
-          >
-            person
-          </i>
+          >person</i>
+          <i
+            v-if="user"
+            class="material-icons toolbar-item"
+            @click="$bvModal.show('logout-modal')"
+          >person</i>
         </div>
       </div>
     </div>
@@ -152,6 +157,7 @@ export default Vue.extend({
   computed: {
     ...mapGetters({
       on: 'push/enabled',
+      user: 'auth/user',
     }),
   },
 })

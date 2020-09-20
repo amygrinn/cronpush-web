@@ -3,6 +3,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
+const backend = 'https://cronpush.tygr.info/api'
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -16,7 +18,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000/',
+        target: backend,
         pathRewrite: { '^/api': '' },
       },
     },
