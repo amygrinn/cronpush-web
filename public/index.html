@@ -1,31 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link rel="icon" href="<%= BASE_URL %>favicon-128.ico" sizes="128x128" />
+    <link rel="icon" href="<%= BASE_URL %>favicon-196.ico" sizes="196x196" />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="<%= BASE_URL %>favicon-76.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="<%= BASE_URL %>favicon-120.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="<%= BASE_URL %>favicon-152.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="<%= BASE_URL %>favicon-180.png"
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&family=DM+Mono:wght@300;400">
-  <title>Cron Push</title>
-  <!-- Matomo Tag Manager -->
-  <script type="text/javascript">
-    var _mtm = window._mtm = window._mtm || [];
-    _mtm.push({ 'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start' });
-    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript'; g.async = true; g.src = 'https://matomo.tygr.info/js/container_R9to650S.js'; s.parentNode.insertBefore(g, s);
-  </script>
-  <!-- End Matomo Tag Manager -->
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&family=DM+Mono:wght@300;400"
+    />
+    <title>Cron Push</title>
+    <!-- Matomo Tag Manager -->
+    <script type="text/javascript">
+      var _mtm = (window._mtm = window._mtm || [])
+      _mtm.push({ 'mtm.startTime': new Date().getTime(), event: 'mtm.Start' })
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0]
+      g.type = 'text/javascript'
+      g.async = true
+      g.src = 'https://matomo.tygr.info/js/container_R9to650S.js'
+      s.parentNode.insertBefore(g, s)
+    </script>
+    <!-- End Matomo Tag Manager -->
+  </head>
 
-<body>
-  <noscript>
-    <strong>We're sorry but Cron Push doesn't work properly without JavaScript enabled. Please enable it to
-      continue.</strong>
-  </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-</body>
-
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but Cron Push doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>
