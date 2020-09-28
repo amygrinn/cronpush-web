@@ -33,7 +33,7 @@ class CreationError extends Error {
  * @throws {NotPermittedError}
  * @throws {CreationError}
  */
-export default async (createIfNotExists: boolean) => {
+export default async (vapidPublicKey: string, createIfNotExists: boolean) => {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     throw new UnsupportedError()
   }
@@ -57,7 +57,7 @@ export default async (createIfNotExists: boolean) => {
   if (createIfNotExists && !subscription) {
     subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: process.env.VUE_APP_VAPID_PUBLIC_KEY,
+      applicationServerKey: vapidPublicKey,
     })
 
     if (!subscription) {

@@ -2,38 +2,52 @@ import { Module } from 'vuex'
 import http from '../http'
 import getPushSubscription from './get-push-subscription'
 
-interface PushModule {
+interface Subscription {
   enabled: boolean
   endpoint: string
   timeZone: string
 }
 
+interface PushModule {
+  subscription: Subscription
+  vapidPublicKey: string
+}
+
 const pushModule: Module<PushModule, any> = {
   namespaced: true,
   state: {
-    enabled: false,
-    endpoint: '',
-    timeZone: '',
+    subscription: {
+      enabled: false,
+      endpoint: '',
+      timeZone: '',
+    },
+    vapidPublicKey: '',
   },
   getters: {
     enabled(state) {
-      return state.enabled
+      return state.subscription.enabled
     },
     endpoint(state) {
-      return state.endpoint
+      return state.subscription.endpoint
     },
     timeZone(state) {
-      return state.timeZone
+      return state.subscription.timeZone
+    },
+    vapidPublicKey(state) {
+      return state.vapidPublicKey
     },
   },
   mutations: {
-    setSubscription(state, subscription: PushModule) {
-      state.enabled = subscription.enabled
-      state.endpoint = subscription.endpoint
-      state.timeZone = subscription.timeZone
+    setSubscription(state, subscription: Subscription) {
+      state.subscription.enabled = subscription.enabled
+      state.subscription.endpoint = subscription.endpoint
+      state.subscription.timeZone = subscription.timeZone
     },
     disable(state) {
-      state.enabled = false
+      state.subscription.enabled = false
+    },
+    setVapidPublicKey(state, key: string) {
+      state.vapidPublicKey = key
     },
   },
   actions: {
@@ -41,8 +55,13 @@ const pushModule: Module<PushModule, any> = {
       root: true,
       async handler({ commit, dispatch }) {
         try {
+          let { data: vapidPublicKey } = await http.get(
+            '/push/vapid-public-key'
+          )
+
+          commit('setVapidPublicKey', vapidPublicKey)
           await navigator.serviceWorker.ready
-          const subscription = await getPushSubscription(false)
+          const subscription = await getPushSubscription(vapidPublicKey, false)
           const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
           if (!subscription) {
@@ -61,11 +80,14 @@ const pushModule: Module<PushModule, any> = {
         }
       },
     },
-    async updateSubscription({ commit, dispatch }) {
+    async updateSubscription({ commit, dispatch, getters }) {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
       try {
-        const subscription = await getPushSubscription(true)
+        const subscription = await getPushSubscription(
+          getters.vapidPublicKey,
+          true
+        )
         if (subscription) {
           try {
             let result = await http.get('/push', {
@@ -96,10 +118,10 @@ const pushModule: Module<PushModule, any> = {
         commit('disable')
       }
     },
-    async disableSubscription({ state, commit }) {
-      if (state.endpoint) {
+    async disableSubscription({ commit, getters }) {
+      if (getters.endpoint) {
         const result = await http.patch('/push', {
-          endpoint: state.endpoint,
+          endpoint: getters.endpoint,
           enabled: false,
         })
         commit('setSubscription', result.data)
@@ -107,13 +129,13 @@ const pushModule: Module<PushModule, any> = {
         commit('disable')
       }
     },
-    async sendSubscription({ state, commit }) {
+    async sendSubscription({ commit, getters }) {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-      if (state.endpoint) {
+      if (getters.endpoint) {
         const result = await http.patch('/push', {
-          endpoint: state.endpoint,
-          enabled: state.enabled,
+          endpoint: getters.endpoint,
+          enabled: getters.enabled,
           timeZone,
         })
         commit('setSubscription', result.data)
