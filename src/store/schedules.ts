@@ -116,6 +116,7 @@ const schedulesModule: Module<SchedulesModule, any> = {
       if (endpoint) {
         const result = await http.post('/schedules', {
           schedule,
+          enabled: schedule.enabled,
           push: { endpoint },
         })
         const schedules: Schedule[] = [...getters.schedules]
@@ -127,6 +128,7 @@ const schedulesModule: Module<SchedulesModule, any> = {
       const endpoint = rootGetters['push/endpoint']
       const result = await http.patch('/schedules/' + schedule.id, {
         schedule,
+        enabled: schedule.enabled,
         push: { endpoint },
       })
       const schedules: Schedule[] = getters.schedules

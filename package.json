@@ -13,6 +13,7 @@
     "cronstrue": "^1.88.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.12",
     "@types/luxon": "^1.21.0",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
