@@ -24,3 +24,6 @@ yarn-error.log*
 *.sln
 *.sw?
 debug.log
+
+/deploy_rsa
+/deploy_rsa.pub
