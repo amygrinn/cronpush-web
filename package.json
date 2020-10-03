@@ -1,7 +1,22 @@
 {
-  "name": "cron-push",
+  "name": "cronpush-web",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "description": "Website for cronpush.tygr.info, a web push notification scheduler",
+  "homepage": "https://cronpush.tygr.info",
+  "author": {
+    "name": "Tyler Grinn",
+    "email": "tylergrinn@gmail.com",
+    "url": "https://tygr.info"
+  },
+  "files": [
+    "dist"
+  ],
+  "browser": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tylergrinn/cronpush-web.git"
+  },
   "scripts": {
     "start": "vue-cli-service serve",
     "start:prod": "vue-cli-service serve --mode production",
