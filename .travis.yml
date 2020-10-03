@@ -23,16 +23,16 @@ before_script:
 jobs:
   include:
     - stage: test
-      env: NODE_ENV=test
       script: npm run lint
-    - env: NODE_ENV=test
-      script:
+    - script:
         - npm run build
-        # - npm test (TODO)
-
-    - stage: deploy
-      if: branch = main
-      env: NODE_ENV=production
-      script:
-        - npm run build
-        - bash scripts/web-deploy.sh
+        - npm test
+      # Always deploy reports
+      after_script: bash scripts/report-deploy.sh
+      deploy:
+        edge: true
+        # Only release on main branch
+        on:
+          branch: main
+        provider: script
+        script: bash scripts/web-deploy.sh

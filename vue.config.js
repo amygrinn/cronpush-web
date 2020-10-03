@@ -1,6 +1,5 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
-
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
 const backend = 'http://localhost:8080' // 'https://cronpush.tygr.info/api'
@@ -22,12 +21,14 @@ module.exports = {
         pathRewrite: { '^/api': '' },
       },
     },
+    port: 8081,
   },
   configureWebpack: {
     plugins: [
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
+        reportFilename: '../reports/build-report.html',
       }),
       new MomentLocalesPlugin(),
     ],
