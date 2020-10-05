@@ -1,6 +1,9 @@
 <template>
-  <div @click.prevent="$emit('check', !$refs['checkbox'].checked)">
-    <div class="d-flex">
+  <div class="d-flex">
+    <div
+      class="d-flex"
+      @click.prevent="$emit('check', !$refs['checkbox'].checked)"
+    >
       <b-form-checkbox
         class="readonly"
         ref="checkbox"
