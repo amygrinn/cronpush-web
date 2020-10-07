@@ -24,6 +24,10 @@ http.interceptors.request.use(config => {
   return config
 })
 
+document.addEventListener('visibilitychange', () =>
+  store.dispatch('schedules/refresh')
+)
+
 store.dispatch('init')
 
 export default store
