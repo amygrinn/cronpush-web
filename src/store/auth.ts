@@ -52,9 +52,10 @@ const authModule: Module<AuthState, any> = {
         }
       },
     },
-    logout({ commit }) {
+    logout({ commit, dispatch }) {
       localStorage.removeItem('token')
       commit('removeUser')
+      return dispatch('push/deleteSubscription', null, { root: true })
     },
     async login({ dispatch }, user) {
       try {

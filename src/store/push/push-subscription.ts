@@ -22,6 +22,12 @@ class CreationError extends Error {
   }
 }
 
+class UnsubscriptionError extends Error {
+  constructor() {
+    super('Unsubscription failed')
+  }
+}
+
 /**
  *
  * Gets an existing push subscription or creates a new one
@@ -33,7 +39,10 @@ class CreationError extends Error {
  * @throws {NotPermittedError}
  * @throws {CreationError}
  */
-export default async (vapidPublicKey: string, createIfNotExists: boolean) => {
+export const getPushSubscription = async (
+  vapidPublicKey: string,
+  createIfNotExists: boolean
+) => {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     throw new UnsupportedError()
   }
@@ -66,4 +75,30 @@ export default async (vapidPublicKey: string, createIfNotExists: boolean) => {
   }
 
   return subscription
+}
+
+export const removePushSubscription = async () => {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    throw new UnsupportedError()
+  }
+
+  const registration = await navigator.serviceWorker.getRegistration()
+
+  if (!registration) {
+    throw new NotRegisteredError()
+  }
+
+  if (Notification.permission !== 'granted') {
+    throw new NotPermittedError()
+  }
+
+  let subscription = await registration.pushManager.getSubscription()
+
+  if (subscription) {
+    try {
+      await subscription.unsubscribe()
+    } catch (err) {
+      throw new UnsubscriptionError()
+    }
+  }
 }

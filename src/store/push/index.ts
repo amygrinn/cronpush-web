@@ -1,6 +1,9 @@
 import { Module } from 'vuex'
 import http from '../http'
-import getPushSubscription from './get-push-subscription'
+import {
+  getPushSubscription,
+  removePushSubscription,
+} from './push-subscription'
 
 interface Subscription {
   enabled: boolean
@@ -115,6 +118,9 @@ const pushModule: Module<PushModule, any> = {
           commit('disable')
         }
       } catch {
+        alert(
+          'This device and/or browser does not support web push notifications'
+        )
         commit('disable')
       }
     },
@@ -140,6 +146,10 @@ const pushModule: Module<PushModule, any> = {
         })
         commit('setSubscription', result.data)
       }
+    },
+    async deleteSubscription({ commit }) {
+      await removePushSubscription()
+      commit('disable')
     },
   },
 }
