@@ -2,7 +2,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
-const backend = 'http://localhost:8080' // 'https://cronpush.tygr.info/api'
+const backend = 'https://cronpush.tygr.info/api' // 'http://localhost:8080'
 
 module.exports = {
   css: {
